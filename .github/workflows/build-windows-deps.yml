@@ -3,7 +3,7 @@ name: Build vcpkg deps
 on:
   workflow_dispatch:
     inputs:
-      build_packages:
+      packages:
         description: 'Build Packages'
         required: false
         type: string
@@ -36,8 +36,8 @@ jobs:
            -Password %GITHUB_TOKEN% ^
            -StorePasswordInClearText
            echo VCPKG_BINARY_SOURCES=clear;nuget,%GHCR_URL%,readwrite >> %GITHUB_ENV%
-    - name: Check options
-      run: set
+    - name: Install packages
+      run: vcpkg install ${{ input.packages }}
            
     
 
