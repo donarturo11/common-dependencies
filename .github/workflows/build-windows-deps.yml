@@ -33,7 +33,7 @@ jobs:
       run: |
            set
     - name: Check options
-      run: ${{ inputs.exec_cmd }}
+      run: set
            
     
 
