@@ -2,7 +2,7 @@ name: Build vcpkg deps
 
 on:
   workflow_dispatch:
-  inputs:
+    inputs:
       install_packages:
         description: 'Install Packages'
         required: false
