@@ -24,13 +24,14 @@ jobs:
         shell: cmd
         
     steps:
-    - name: Check options
+    - name: Print variables
       run: |
            set
+    - name: Check options
+      run: |
            ninja --version
-           nuget
-           vcpkg
-           cl
+           nuget /?
+           vcpkg /?
     
 
 
