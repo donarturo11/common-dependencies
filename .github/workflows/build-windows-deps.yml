@@ -29,9 +29,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GHCR_URL: https://nuget.pkg.github.com/${{ env.GITHUB_REPOSITORY_OWNER }}/index.json
-        VCPKG_BINARY_SOURCES: clear; nuget,${{ GHCR_URL }},readwrite
       run: |
-           set
            nuget sources add ^
            -Name ghcr ^
            -Source %GHCR_URL% ^
@@ -39,6 +37,8 @@ jobs:
            -Password %GITHUB_TOKEN% ^
            -StorePasswordInClearText
     - name: Check options
+      env:
+        VCPKG_BINARY_SOURCES: clear;nuget,${{ env.GHCR_URL }},readwrite
       run: set
            
     
