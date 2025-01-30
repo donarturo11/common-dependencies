@@ -26,7 +26,7 @@ jobs:
     env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GHCR_URL: https://nuget.pkg.github.com/donarturo11/index.json
-        VCPKG_BINARY_SOURCES: "clear;nuget,${{ env.GHCR_URL }},readwrite"
+        VCPKG_BINARY_SOURCES: "clear;nuget,${{ GHCR_URL }},readwrite"
     steps:
     - name: Setup
       run: |
