@@ -36,9 +36,7 @@ jobs:
            -Username donarturo11 ^
            -Password %GITHUB_TOKEN% ^
            -StorePasswordInClearText
-    - name: Check options
-      env:
-        
+    - name: Check options        
       run: set
            
     
