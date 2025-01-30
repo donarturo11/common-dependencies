@@ -3,8 +3,8 @@ name: Build vcpkg deps
 on:
   workflow_dispatch:
     inputs:
-      install_packages:
-        description: 'Install Packages'
+      build_packages:
+        description: 'Build Packages'
         required: false
         type: string
       exec_cmd:
@@ -15,19 +15,20 @@ env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
 
-
 jobs:
   run-windows:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: windows-latest
+    permissions:
+      packages: write
     defaults:
       run:
         shell: cmd
         
     steps:
     - name: Print variables
+      env:
+        GHCR_URL: https://nuget.pkg.github.com/donarturo11/index.json
+        VCPKG_BINARY_SOURCES: clear; nuget,${{ env.GHCR_URL }},readwrite
       run: |
            set
     - name: Check options
