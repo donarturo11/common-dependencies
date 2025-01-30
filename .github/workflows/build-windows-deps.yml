@@ -35,9 +35,8 @@ jobs:
            -Username donarturo11 ^
            -Password %GITHUB_TOKEN% ^
            -StorePasswordInClearText
+           echo VCPKG_BINARY_SOURCES=clear;nuget,%GHCR_URL%,readwrite >> %GITHUB_ENV%
     - name: Check options
-      env:
-        VCPKG_BINARY_SOURCES: "clear;nuget,${{ GHCR_URL }},readwrite"
       run: set
            
     
