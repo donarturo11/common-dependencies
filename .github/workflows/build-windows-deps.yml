@@ -25,13 +25,19 @@ jobs:
         shell: cmd
         
     steps:
-    - name: Print variables
+    - name: Setup
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GHCR_URL: https://nuget.pkg.github.com/donarturo11/index.json
-        VCPKG_BINARY_SOURCES: clear; nuget,${{ env.GHCR_URL }},readwrite
+        GHCR_URL: https://nuget.pkg.github.com/${{ env.GITHUB_REPOSITORY_OWNER }}/index.json
+        VCPKG_BINARY_SOURCES: clear; nuget,${{ GHCR_URL }},readwrite
       run: |
            set
+           nuget sources add ^
+           -Name ghcr ^
+           -Source %GHCR_URL% ^
+           -Username %GITHUB_REPOSITORY_OWNER% ^
+           -Password %GITHUB_TOKEN% ^
+           -StorePasswordInClearText
     - name: Check options
       run: set
            
