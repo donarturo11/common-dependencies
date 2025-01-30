@@ -25,6 +25,7 @@ jobs:
         shell: cmd
         
     steps:
+    - uses: actions/checkout@v3
     - name: Print variables
       env:
         GHCR_URL: https://nuget.pkg.github.com/donarturo11/index.json
