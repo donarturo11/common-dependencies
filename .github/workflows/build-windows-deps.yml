@@ -7,7 +7,10 @@ on:
         description: 'Install Packages'
         required: false
         type: string
-
+      exec_cmd:
+        description: 'Execute command'
+        required: false
+        type: string
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
@@ -28,10 +31,8 @@ jobs:
       run: |
            set
     - name: Check options
-      run: |
-           ninja --version
-           nuget /?
-           vcpkg /?
+      run: ${{ inputs.exec_cmd }}
+           
     
 
 
