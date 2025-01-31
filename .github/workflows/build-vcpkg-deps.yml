@@ -12,6 +12,11 @@ on:
         required: true
         default: 'x64-windows'
         type: string
+   debug:
+       description: 'Build debug'
+       required: false
+       default: false
+       type: boolean
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -40,7 +45,9 @@ jobs:
     - name: Install packages
       run: |
           set "VCPKG_BINARY_SOURCES=clear;nuget,%GHCR_URL%,readwrite"
-          vcpkg install ${{ inputs.packages }} --triplet ${{ inputs.triplet }}
+          vcpkg install ${{ inputs.packages }} ^
+          --triplet ${{ inputs.triplet }} ^
+          ${{ inputs.debug && '--debug' || '' }}
 
 
 
