@@ -25,13 +25,11 @@ env:
 jobs:
   run-windows:
     runs-on: windows-latest
-    permissions:
-      packages: write
     defaults:
       run:
         shell: cmd
     env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PKG_MGMNT_TOKEN: ${{ secrets.PKG_MGMNT_TOKEN }}
         GHCR_URL: https://nuget.pkg.github.com/donarturo11/index.json
     steps:
     - name: Setup
@@ -40,7 +38,7 @@ jobs:
            -Name ghcr ^
            -Source %GHCR_URL% ^
            -Username donarturo11 ^
-           -Password %GITHUB_TOKEN% ^
+           -Password %PKG_MGMNT_TOKEN% ^
            -StorePasswordInClearText
     - name: Install packages
       run: |
