@@ -12,11 +12,11 @@ on:
         required: true
         default: 'x64-windows'
         type: string
-   debug:
-       description: 'Build debug'
-       required: false
-       default: false
-       type: boolean
+      debug:
+        description: 'Build debug'
+        required: false
+        default: false
+        type: boolean
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
