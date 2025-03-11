@@ -1,0 +1,78 @@
+name: Build dependencies
+
+on:
+  workflow_dispatch
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    strategy:
+      matrix:
+       include:
+        - name: "windows-msvc"
+          os: windows-latest
+          compiler: "cl"
+        - name: "windows-mingw"
+          os: windows-latest
+          compiler: "gcc"
+          msystem: "UCRT64"
+        - name: "linux-gcc"
+          os: ubuntu-latest
+          compiler: "gcc"
+          flags: ""
+          deps-prefix: "/home/runner/deps"
+        - name: "macos-clang"
+          os: macos-latest
+          compiler: "clang"
+          flags: "-DCMAKE_OSX_ARCHITECTURES=\"x86_64;arm64\""
+          deps-prefix: "/Users/runner/deps"
+        
+    runs-on: ${{matrix.os}}
+    defaults:
+      run:
+        shell: bash
+    
+    steps:
+    - if: ${{ matrix.name == 'windows-msvc' }}
+      name: Set up Visual Studio shell      
+      uses: egor-tensin/vs-shell@v2
+      with:
+        arch: x64
+    
+    - if: ${{ matrix.name == 'windows-mingw' }}
+      name: Install MinGW
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        update: true
+        install: |
+            base base-devel p7zip zip git
+    
+    - if: ${{ matrix.name == 'windows-mingw' }}
+      name: Install MinGW Packages
+      shell: 'msys2 {0}'
+      run: |
+          pacman -S --noconfirm \
+                ${MINGW_PACKAGE_PREFIX}-toolchain \
+                ${MINGW_PACKAGE_PREFIX}-cmake
+    
+    - name: Test environment
+      run: echo $(env)
+#    - name: Build
+#      run: |
+#          mkdir fftw3
+#          curl -L https://www.fftw.org/fftw-3.3.10.tar.gz | tar -vxz --strip-components=1 -C fftw3
+#          cmake -S fftw3 -B fftw3-build -DCMAKE_INSTALL_PREFIX=${{ matrix.deps-prefix }}/fftw3
+#          cmake --build fftw3-build
+#          cmake --install fftw3
+          
+          
+          
+      
+          
+
+
+
