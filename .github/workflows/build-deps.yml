@@ -15,8 +15,8 @@ jobs:
         - name: "windows-msvc"
           os: windows-latest
           toolchain:
-            cc: 'cl'
-            cxx: 'cl'
+            cc: 'cl.exe'
+            cxx: 'cl.exe'
           sdks-prefix: 'C:/SDKs/windows-msvc'
         - name: "windows-gcc"
           os: windows-latest
@@ -66,10 +66,6 @@ jobs:
           sudo mkdir -p ${{ matrix.sdks-prefix }}
           sudo chmod 777 ${{ matrix.sdks-prefix }}
         fi
-    
-    - name: Test Visual Studio shell
-      if: ${{ runner.os == 'Windows' }}
-      run: cl.exe /Bv
     
     - name: Test environment
       run: |
