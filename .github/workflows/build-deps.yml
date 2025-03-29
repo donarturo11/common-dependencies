@@ -58,7 +58,7 @@ jobs:
         echo "CMAKE_CXX_COMPILER=\"${{ matrix.toolchain.cxx }}\"" >> $GITHUB_ENV
         echo "SDKS_PREFIX=\"${{ matrix.sdks-prefix }}" >> $GITHUB_ENV
         if [[ $RUNNER_OS == 'macOS' ]]; then
-         echo "CMAKE_OSX_ARCHITECTURES=\"x86_64 arm64\"" >> $GITHUB_ENV
+         echo "CMAKE_OSX_ARCHITECTURES=\"x86_64;arm64\"" >> $GITHUB_ENV
          echo "CMAKE_OSX_DEPLOYMENT_TARGET=\"10.15\"" >> $GITHUB_ENV
         fi
     
