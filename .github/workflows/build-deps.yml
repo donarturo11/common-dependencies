@@ -71,7 +71,8 @@ jobs:
       run: echo "Setup MacOS"
     
     - name: Test environment
-      run: echo $(env)
+      run: |
+        env
 #    - name: Build fftw
 #      run: |
 #          mkdir fftw3
