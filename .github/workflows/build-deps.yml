@@ -15,8 +15,8 @@ jobs:
         - name: "windows-msvc"
           os: windows-latest
           toolchain:
-            cc: 'cl.exe'
-            cxx: 'cl.exe'
+            cc: 'cl'
+            cxx: 'cl'
           sdks-prefix: 'C:/SDKs/windows-msvc'
         - name: "windows-gcc"
           os: windows-latest
