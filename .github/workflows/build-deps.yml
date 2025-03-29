@@ -15,8 +15,8 @@ jobs:
         - name: "windows-msvc"
           os: windows-latest
           toolchain:
-            cc: 'cl.exe'
-            cxx: 'cl.exe'
+            cc: 'cl'
+            cxx: 'cl'
           sdks-prefix: 'C:/SDKs/windows-msvc'
         - name: "windows-gcc"
           os: windows-latest
@@ -54,7 +54,6 @@ jobs:
       run: |
         [[ $RUNNER_OS == 'Linux' ]] && sudo apt-get update && sudo apt-get install ninja-build -y
         [[ $RUNNER_OS == 'Windows' ]] && echo "C:\\mingw64\\bin" >> $GITHUB_PATH
-        [[ $RUNNER_OS == 'macOS' ]] && brew install ninja
         echo 'CMAKE_GENERATOR=Ninja' >> $GITHUB_ENV
         echo 'CMAKE_C_COMPILER=${{ matrix.toolchain.cc }}' >> $GITHUB_ENV
         echo 'CMAKE_CXX_COMPILER=${{ matrix.toolchain.cxx }}' >> $GITHUB_ENV
