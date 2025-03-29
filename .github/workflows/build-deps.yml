@@ -1,7 +1,7 @@
-name: Build dependencies
+name: Build common deps
 
 on:
-  workflow_dispatch
+  workflow_dispatch: []
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -14,54 +14,63 @@ jobs:
        include:
         - name: "windows-msvc"
           os: windows-latest
-          compiler: "cl"
-        - name: "windows-mingw"
+          toolchain:
+            cc: 'cl.exe'
+            cxx: 'cl.exe'
+          sdks-prefix: 'C:/SDKs/windows-msvc'
+        - name: "windows-gcc"
           os: windows-latest
-          compiler: "gcc"
-          msystem: "UCRT64"
+          toolchain:
+            cc: 'gcc.exe'
+            cxx: 'gcc.exe'
+          sdks-prefix: 'C:/SDKs/windows-mingw'
         - name: "linux-gcc"
           os: ubuntu-latest
-          compiler: "gcc"
-          flags: ""
-          deps-prefix: "/home/runner/deps"
+          toolchain:
+            cc: 'gcc'
+            cxx: 'gcc'
+          sdks-prefix: '/opt/SDKs/linux-gcc'
         - name: "macos-clang"
           os: macos-latest
-          compiler: "clang"
-          flags: "-DCMAKE_OSX_ARCHITECTURES=\"x86_64;arm64\""
-          deps-prefix: "/Users/runner/deps"
-        
+          toolchain:
+            cc: 'clang'
+            cxx: 'clang++'
+          sdks-prefix: '/opt/SDKs/macos-clang'
+    
     runs-on: ${{matrix.os}}
     defaults:
       run:
         shell: bash
     
     steps:
-    - if: ${{ matrix.name == 'windows-msvc' }}
-      name: Set up Visual Studio shell      
+    - name: Set up Visual Studio shell
+      if: ${{ runner.os == "Windows" }}
       uses: egor-tensin/vs-shell@v2
       with:
         arch: x64
+
+    - name: Setup MINGW
+      if: ${{ runner.os == "Windows" }}
+      shell: bash
+      run:
+        echo "C:\\mingw64\\bin" >> $GITHUB_PATH
+
+    - name: Setup environment (General)
+      env:
+        CMAKE_GENERATOR: Ninja
+        CMAKE_C_COMPILER: ${{ matrix.toolchain.cc }}
+        CMAKE_CXX_COMPILER: ${{ matrix.toolchain.cxx }}
+        SDKS_PREFIX: ${{ matrix.sdks-prefix }}
     
-    - if: ${{ matrix.name == 'windows-mingw' }}
-      name: Install MinGW
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: ${{ matrix.msystem }}
-        update: true
-        install: |
-            base base-devel p7zip zip git
-    
-    - if: ${{ matrix.name == 'windows-mingw' }}
-      name: Install MinGW Packages
-      shell: 'msys2 {0}'
-      run: |
-          pacman -S --noconfirm \
-                ${MINGW_PACKAGE_PREFIX}-toolchain \
-                ${MINGW_PACKAGE_PREFIX}-cmake
+    - name: Setup environment for MacOS
+      if: ${{ runner.os == 'macOS' }}
+      env:
+        CMAKE_OSX_ARCHITECTURES: 'x86_64 arm64'
+        CMAKE_OSX_DEPLOYMENT_TARGET: 10.15
     
     - name: Test environment
       run: echo $(env)
-#    - name: Build
+#    - name: Build fftw
 #      run: |
 #          mkdir fftw3
 #          curl -L https://www.fftw.org/fftw-3.3.10.tar.gz | tar -vxz --strip-components=1 -C fftw3
