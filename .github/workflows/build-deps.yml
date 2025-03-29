@@ -61,6 +61,7 @@ jobs:
         CMAKE_C_COMPILER: ${{ matrix.toolchain.cc }}
         CMAKE_CXX_COMPILER: ${{ matrix.toolchain.cxx }}
         SDKS_PREFIX: ${{ matrix.sdks-prefix }}
+      run: echo "Setup environment"
     
     - name: Setup environment for MacOS
       if: ${{ runner.os == 'macOS' }}
