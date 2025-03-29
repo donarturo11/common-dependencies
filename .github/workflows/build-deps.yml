@@ -44,13 +44,13 @@ jobs:
     
     steps:
     - name: Set up Visual Studio shell
-      if: ${{ runner.os == "Windows" }}
+      if: ${{ runner.os == 'Windows' }}
       uses: egor-tensin/vs-shell@v2
       with:
         arch: x64
 
     - name: Setup MINGW
-      if: ${{ runner.os == "Windows" }}
+      if: ${{ runner.os == 'Windows' }}
       shell: bash
       run:
         echo "C:\\mingw64\\bin" >> $GITHUB_PATH
