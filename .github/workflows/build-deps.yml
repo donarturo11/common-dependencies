@@ -68,6 +68,7 @@ jobs:
       env:
         CMAKE_OSX_ARCHITECTURES: 'x86_64 arm64'
         CMAKE_OSX_DEPLOYMENT_TARGET: 10.15
+      run: echo "Setup MacOS"
     
     - name: Test environment
       run: echo $(env)
