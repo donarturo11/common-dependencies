@@ -52,7 +52,7 @@ jobs:
     - name: Setup environment
       shell: bash
       run: |
-        [[ $RUNNER_OS == 'Linux' ]] && apt-get update && apt-get install ninja -y
+        [[ $RUNNER_OS == 'Linux' ]] && sudo apt-get update && sudo apt-get install ninja -y
         [[ $RUNNER_OS == 'Windows' ]] && echo "C:\\mingw64\\bin" >> $GITHUB_PATH
         echo "CMAKE_GENERATOR=\"Ninja\"" >> $GITHUB_ENV
         echo "CMAKE_C_COMPILER=\"${{ matrix.toolchain.cc }}\"" >> $GITHUB_ENV
@@ -62,6 +62,10 @@ jobs:
          echo "CMAKE_OSX_ARCHITECTURES=x86_64 arm64" >> $GITHUB_ENV
          echo "CMAKE_OSX_DEPLOYMENT_TARGET=\"10.15\"" >> $GITHUB_ENV
         fi
+        if [[ $RUNNER_OS != 'Windows' ]]; then
+          sudo mkdir -p ${{ matrix.sdks-prefix }}
+          sudo chmod 777 ${{ matrix.sdks-prefix }}
+        fi
     
     - name: Test environment
       run: |
@@ -69,7 +73,7 @@ jobs:
     - name: Build fftw
       run: |
           mkdir fftw3
-          curl -L https://www.fftw.org/fftw-3.3.10.tar.gz | tar -vxz --strip-components=1 -C fftw3
+          curl -L https://www.fftw.org/fftw-3.3.10.tar.gz | tar -xz --strip-components=1 -C fftw3
           cmake -S fftw3 -B fftw3-build -DCMAKE_INSTALL_PREFIX=${{ matrix.sdks-prefix }}/fftw3
           cmake --build fftw3-build
           cmake --install fftw3-build
