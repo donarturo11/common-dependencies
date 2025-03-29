@@ -69,7 +69,10 @@ jobs:
     
     - name: Test environment
       run: |
-        env
+        echo "CMAKE_C_COMPILER=$CMAKE_C_COMPILER"
+        echo "CMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER"
+        echo "SDKS_PREFIX=$SDKS_PREFIX"
+        
     - name: Build fftw
       run: |
           mkdir fftw3
