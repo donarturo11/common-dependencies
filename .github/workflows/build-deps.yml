@@ -81,9 +81,9 @@ jobs:
         name: "Foo"
         ver: 9999
         sources:
-        - url1
-        - url2
-        - url3
+          - url1
+          - url2
+          - url3
 #    - name: Build fftw
 #      run: |
 #          mkdir fftw3
