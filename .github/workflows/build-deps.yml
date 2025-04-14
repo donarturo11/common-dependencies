@@ -75,13 +75,22 @@ jobs:
         echo "CMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER"
         echo "SDKS_PREFIX=$SDKS_PREFIX"
         
-    - name: Build fftw
-      run: |
-          mkdir fftw3
-          curl -L https://www.fftw.org/fftw-3.3.10.tar.gz | tar -xz --strip-components=1 -C fftw3
-          cmake -S fftw3 -B fftw3-build -DCMAKE_INSTALL_PREFIX=${{ matrix.sdks-prefix }}/fftw3
-          cmake --build fftw3-build
-          cmake --install fftw3-build
+    - name: Test package builder
+      uses: ./.github/actions/build-package
+      with:
+        name: "Foo"
+        ver: 9999
+        sources:
+        - url1
+        - url2
+        - url3
+#    - name: Build fftw
+#      run: |
+#          mkdir fftw3
+#          curl -L https://www.fftw.org/fftw-3.3.10.tar.gz | tar -xz --strip-components=1 -C fftw3
+#          cmake -S fftw3 -B fftw3-build -DCMAKE_INSTALL_PREFIX=${{ matrix.sdks-prefix }}/fftw3
+#          cmake --build fftw3-build
+#          cmake --install fftw3-build
           
           
           

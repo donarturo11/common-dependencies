@@ -1,0 +1,20 @@
+name: Build Package
+inputs:
+  name:
+    description: Package name
+    required: true
+  version:
+    description: Version
+    required: true
+  sources:
+    description: Sources
+    required: true
+
+runs:
+  using: composite
+  steps:
+  - id: create-package
+    shell: bash
+    run: |
+        echo "Package name ${{ inputs.name }}"
+        echo "Package version ${{ inputs.version }}"
