@@ -82,6 +82,7 @@ jobs:
         fi
     
     - name: Test environment
+      shell: bash
       run: |
         echo "GITHUB:\n ${{ toJSON(github) }}"
         echo "ENV:\n ${{ toJSON(env) }}"
