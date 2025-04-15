@@ -84,9 +84,12 @@ jobs:
     - name: Test environment
       shell: bash
       run: |
-        echo "GITHUB:\n ${{ toJSON(github) }}"
-        echo "ENV:\n ${{ toJSON(env) }}"
-        echo "MATRIX:\n ${{ toJSON(matrix) }}"
+        echo "GITHUB:"
+        echo "${{ toJSON(github) }}"
+        echo "ENV:"
+        echo "${{ toJSON(env) }}"
+        echo "MATRIX:"
+        echo "${{ toJSON(matrix) }}"
         
     - name: Test package builder
       uses: ./.github/actions/build-package
