@@ -11,9 +11,6 @@ runs:
   - name: build packages
     shell: python
     run: |
-        import sys, os
-        print(os.environ.get("INPUT_TAG"))
-        print(os.environ.get("INPUT_PACKAGES"))
         mod_path=os.environ.get("GITHUB_ACTION_PATH")
         sys.path.insert(0, mod_path)
         settings={
@@ -25,3 +22,9 @@ runs:
         from minpkg.CI import GithubHelper
         helper=GithubHelper(settings=settings)
         helper.run()
+  
+  - name: Test variables
+    shell: python
+    run: |
+        import sys, os
+        print(os.environ)
