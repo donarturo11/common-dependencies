@@ -28,4 +28,4 @@ runs:
         inputs="""
            ${{ toJSON(inputs) }}
         """
-        print(SRCS)
+        print(inputs)
