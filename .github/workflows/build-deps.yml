@@ -82,7 +82,7 @@ jobs:
       uses: ./.github/actions/build-package
       with:
         name: "Foo"
-        ver: 9999
+        version: 9999
         source: |
           url1
           url2
