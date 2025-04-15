@@ -12,8 +12,9 @@ runs:
     shell: python
     run: |
         import sys, os
-        #sys.path.insert(0, '${{ github.action_path }}')
-        print(os.getcwd())
+        print(os.environ)
+        mod_path=os.path.normpath("${{ github.action_path }}")
+        sys.path.insert(0, mod_path)
         settings={
           "inputs" : {
               "tag": "${{ inputs.tag }}",
