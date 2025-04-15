@@ -44,7 +44,7 @@ jobs:
     runs-on: ${{matrix.os}}
     defaults:
       run:
-        shell: bash
+        shell: ${{ matrix.shell }}
     
     steps:
     - name: Checkout repository
