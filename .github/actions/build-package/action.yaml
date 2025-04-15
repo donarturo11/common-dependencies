@@ -28,5 +28,4 @@ runs:
         inputs="""
            ${{ toJSON(inputs) }}
         """
-        SRCS=os.environ.get("INPUT_SOURCE").splitlines()
         print(SRCS)
