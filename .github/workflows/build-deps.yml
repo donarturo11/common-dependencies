@@ -103,20 +103,15 @@ jobs:
         
     - name: Test package builder
       uses: ./.github/actions/build-package
+      env:
+          CC: ${{ matrix.toolchain.cc }}
+          CXX: ${{ matrix.toolchain.cxx }}
       with:
-        name: "Foo"
-        version: 9999
-        source: |
-          url1
-          url2
-          url3
-#    - name: Build fftw
-#      run: |
-#          mkdir fftw3
-#          curl -L https://www.fftw.org/fftw-3.3.10.tar.gz | tar -xz --strip-components=1 -C fftw3
-#          cmake -S fftw3 -B fftw3-build -DCMAKE_INSTALL_PREFIX=${{ matrix.sdks-prefix }}/fftw3
-#          cmake --build fftw3-build
-#          cmake --install fftw3-build
+        tag: ${{ matrix.name }}
+        packages: >-
+            fftw
+            portaudio
+            stk
           
           
           
