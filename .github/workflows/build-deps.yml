@@ -49,7 +49,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4 
-      
+    
+    - name: Begin env
+      shell: bash
+      run: |
+        echo "ENV:\n ${{ toJSON(env) }}"
+        
     - name: Set up Visual Studio shell
       if: ${{ runner.os == 'Windows' }}
       uses: egor-tensin/vs-shell@v2
