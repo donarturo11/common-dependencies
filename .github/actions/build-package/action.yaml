@@ -14,9 +14,9 @@ runs:
         import sys, os
         sys.path.insert(0, '${{ github.action_path }}')
         settings={
-          inputs : {
-              tag: "${{ inputs.tag }}",
-              packages: "${{ inputs.packages }}".split()
+          "inputs" : {
+              "tag": "${{ inputs.tag }}",
+              "packages": "${{ inputs.packages }}".split()
           }
         }
         from minpkg.CI import GithubHelper
