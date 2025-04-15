@@ -83,7 +83,7 @@ jobs:
       with:
         name: "Foo"
         ver: 9999
-        sources: |
+        source: |
           url1
           url2
           url3
