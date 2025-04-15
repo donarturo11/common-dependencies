@@ -15,15 +15,14 @@ runs:
         os.environ["PYTHONPATH"]='${{ github.action_path }}'
         sys.path.insert(0, '${{ github.action_path }}')
         import json
-        from tools.containers import AttrDict
-        settings=AttrDict(json.loads("""
+        settings=json.loads("""
         {
             "inputs": ${{ toJSON(inputs) }},
             "env": ${{ toJSON(env) }},
             "github": ${{ toJSON(github) }}
         }
-        """))
-        settings.inputs.packages=settings.inputs.packages.split()
+        """)
+        settings["inputs"]["packages"]=settings["inputs"]["packages"].split()
         from minpkg.CI import GithubHelper
         helper=GithubHelper(settings=settings)
         helper.run()
