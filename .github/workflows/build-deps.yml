@@ -50,10 +50,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4 
     
+    - name: Test python
+      run: python -V
+    
     - name: Begin env
-      shell: bash
+      shell: python
       run: |
-        echo "ENV:\n ${{ toJSON(env) }}"
+        import os
+        print(os.environ)
         
     - name: Set up Visual Studio shell
       if: ${{ runner.os == 'Windows' }}
@@ -82,14 +86,11 @@ jobs:
         fi
     
     - name: Test environment
-      shell: bash
+      shell: python
       run: |
-        echo "GITHUB:" || echo ""
-        echo "${{ toJSON(github) }}" || echo ""
-        echo "ENV:" || echo ""
-        echo "${{ toJSON(env) }}" || echo ""
-        echo "MATRIX:" || echo ""
-        echo "${{ toJSON(matrix) }}" || echo ""
+        print("GITHUB:\n ${{ toJSON(github) }}")
+        print("ENV:\n ${{ toJSON(env) }}"
+        print("MATRIX:\n ${{ toJSON(matrix) }}")
         
     - name: Test package builder
       uses: ./.github/actions/build-package
