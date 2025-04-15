@@ -81,6 +81,9 @@ jobs:
         echo "CMAKE_C_COMPILER=$CMAKE_C_COMPILER"
         echo "CMAKE_CXX_COMPILER=$CMAKE_CXX_COMPILER"
         echo "SDKS_PREFIX=$SDKS_PREFIX"
+        echo "GITHUB:\n ${{ toJSON(github) }}"
+        echo "ENV:\n ${{ toJSON(env) }}"
+        echo "MATRIX:\n ${{ toJSON(matrix) }}"
         
     - name: Test package builder
       uses: ./.github/actions/build-package
