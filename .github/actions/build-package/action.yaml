@@ -8,6 +8,7 @@ inputs:
 runs:
   using: composite
   steps:
+  - uses: actions/setup-python@v5
   - name: build packages
     shell: python
     run: |
