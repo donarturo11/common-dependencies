@@ -88,9 +88,18 @@ jobs:
     - name: Test environment
       shell: python
       run: |
-        print("GITHUB:\n ${{ toJSON(github) }}")
-        print("ENV:\n ${{ toJSON(env) }}"
-        print("MATRIX:\n ${{ toJSON(matrix) }}")
+        _github="""
+            .github ${{ toJSON(github) }}
+            """
+        _env="""
+            env ${{ toJSON(env) }}
+            """
+        _matrix="""
+            matrix ${{ toJSON(matrix) }}
+            """
+        print(_github)
+        print(_env)
+        print(_matrix)
         
     - name: Test package builder
       uses: ./.github/actions/build-package
