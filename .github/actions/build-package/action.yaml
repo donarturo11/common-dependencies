@@ -11,7 +11,8 @@ runs:
   - name: build packages
     shell: python
     run: |
-        import sys
+        import sys, os
+        os.environ["PYTHONPATH"]='${{ github.action_path }}'
         sys.path.insert(0, '${{ github.action_path }}')
         import json
         from tools.containers import AttrDict
