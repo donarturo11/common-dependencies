@@ -15,7 +15,7 @@ runs:
         sys.path.insert(0, '${{ github.action_path }}')
         settings={
           inputs : {
-              tag: "${{ inputs.tag }}"
+              tag: "${{ inputs.tag }}",
               packages: "${{ inputs.packages }}".split()
           }
         }
