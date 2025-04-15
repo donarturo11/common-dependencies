@@ -12,13 +12,14 @@ runs:
     shell: python
     run: |
         import sys, os
-        sys.path.insert(0, '${{ github.action_path }}')
+        #sys.path.insert(0, '${{ github.action_path }}')
+        print(os.getcwd())
         settings={
           "inputs" : {
               "tag": "${{ inputs.tag }}",
               "packages": "${{ inputs.packages }}".split()
           }
         }
-        from minpkg.CI import GithubHelper
-        helper=GithubHelper(settings=settings)
-        helper.run()
+        #from minpkg.CI import GithubHelper
+        #helper=GithubHelper(settings=settings)
+        #helper.run()
