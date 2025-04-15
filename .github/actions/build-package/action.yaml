@@ -12,14 +12,13 @@ runs:
     shell: python
     run: |
         import sys, os
-        os.environ["PYTHONPATH"]='${{ github.action_path }}'
         sys.path.insert(0, '${{ github.action_path }}')
-        import json
-        inputs=""" "inputs": ${{ toJSON(inputs) }} """
-        env=""" "env": ${{ toJSON(env) }} """
-        github=""" "github": ${{ toJSON(github) }} """
-        settings=json.loads(f"{ {inputs}, {env}, {github} }")
-        settings["inputs"]["packages"]=settings["inputs"]["packages"].split()
+        settings={
+          inputs : {
+              tag: "${{ inputs.tag }}"
+              packages: "${{ inputs.packages }}".split()
+          }
+        }
         from minpkg.CI import GithubHelper
         helper=GithubHelper(settings=settings)
         helper.run()
