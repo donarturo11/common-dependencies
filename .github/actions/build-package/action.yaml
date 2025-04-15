@@ -12,7 +12,6 @@ runs:
     shell: python
     run: |
         import sys, os
-        print(os.environ)
         mod_path=os.path.normpath("${{ github.action_path }}")
         sys.path.insert(0, mod_path)
         settings={
@@ -21,6 +20,6 @@ runs:
               "packages": "${{ inputs.packages }}".split()
           }
         }
-        #from minpkg.CI import GithubHelper
-        #helper=GithubHelper(settings=settings)
-        #helper.run()
+        from minpkg.CI import GithubHelper
+        helper=GithubHelper(settings=settings)
+        helper.run()
