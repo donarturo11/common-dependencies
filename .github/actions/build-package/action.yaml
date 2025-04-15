@@ -15,13 +15,10 @@ runs:
         os.environ["PYTHONPATH"]='${{ github.action_path }}'
         sys.path.insert(0, '${{ github.action_path }}')
         import json
-        inputs=""" ${{ toJSON(inputs) }} """
-        env=""" ${{ toJSON(env) }} """
-        github=""" ${{ toJSON(github) }} """
-        settings=json.loads(f"""{ 
-        "inputs": {inputs},
-        "env": {env},
-        "github": {github} }""")
+        inputs=""" "inputs": ${{ toJSON(inputs) }} """
+        env=""" "env": ${{ toJSON(env) }} """
+        github=""" "github": ${{ toJSON(github) }} """
+        settings=json.loads(f"{ {inputs}, {env}, {github} }")
         settings["inputs"]["packages"]=settings["inputs"]["packages"].split()
         from minpkg.CI import GithubHelper
         helper=GithubHelper(settings=settings)
