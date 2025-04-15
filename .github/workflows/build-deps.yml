@@ -14,24 +14,28 @@ jobs:
        include:
         - name: "windows-msvc"
           os: windows-latest
+          shell: cmd
           toolchain:
             cc: 'cl'
             cxx: 'cl'
           sdks-prefix: 'C:/SDKs/windows-msvc'
         - name: "windows-gcc"
           os: windows-latest
+          shell: bash
           toolchain:
             cc: 'gcc.exe'
             cxx: 'gcc.exe'
           sdks-prefix: 'C:/SDKs/windows-mingw'
         - name: "linux-gcc"
           os: ubuntu-latest
+          shell: bash
           toolchain:
             cc: 'gcc'
             cxx: 'gcc'
           sdks-prefix: '/opt/SDKs/linux-gcc'
         - name: "macos-clang"
           os: macos-latest
+          shell: bash
           toolchain:
             cc: 'clang'
             cxx: 'clang++'
