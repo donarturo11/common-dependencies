@@ -9,7 +9,7 @@ class CIHelper:
         pass
 
 class BuildHelper(CIHelper):
-    def __init__(self, settings=dict()):
+    def __init__(self, settings=None):
         super().__init__(settings)
     def run(self):
         print(self.settings.get('inputs'))
