@@ -20,12 +20,6 @@ runs:
               "packages": "${{ inputs.packages }}".split()
           }
         }
-        from minpkg.CI import GithubHelper
-        helper=GithubHelper(settings=settings)
+        from minpkg.CI import BuildHelper
+        helper=BuildHelper(settings=settings)
         helper.run()
-  
-  - name: Test variables
-    shell: python
-    run: |
-        import sys, os
-        print(os.environ)
