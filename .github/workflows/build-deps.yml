@@ -101,6 +101,22 @@ jobs:
         print(_env)
         print(_matrix)
         
+    - name: Test bash
+      shell: bash
+      run: |
+        packages="
+          7z
+          bsdtar
+          cmake
+          ninja
+          make
+          gcc
+          cl
+          "
+        for _pkg in $packages; do
+          which $_pkg  || echo $_pkg failed
+        done
+
     - name: Test package builder
       uses: ./.github/actions/build-package
       env:
