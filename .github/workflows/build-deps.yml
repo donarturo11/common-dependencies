@@ -112,6 +112,7 @@ jobs:
           make
           gcc
           cl
+          pacman
           "
         for _pkg in $packages; do
           which $_pkg  || echo $_pkg failed
