@@ -72,7 +72,7 @@ jobs:
         if [[ $RUNNER_OS == 'Windows' ]]; then
           echo "C:\\mingw64\\bin" >> $GITHUB_PATH
           echo "C:\\msys64\\bin" >> $GITHUB_PATH
-        done
+        fi
         echo 'CMAKE_GENERATOR=Ninja' >> $GITHUB_ENV
         echo "CMAKE_C_COMPILER=${{ matrix.toolchain.cc }}" >> $GITHUB_ENV
         echo "CC=${{ matrix.toolchain.cc }}" >> $GITHUB_ENV
