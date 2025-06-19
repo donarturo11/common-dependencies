@@ -21,7 +21,7 @@ jobs:
           sdks-prefix: 'C:/SDKs/windows-msvc'
         - name: "windows-gcc"
           os: windows-latest
-          shell: bash
+          shell: C:\msys64\msys2.cmd {0}
           toolchain:
             cc: 'gcc.exe'
             cxx: 'gcc.exe'
@@ -78,7 +78,6 @@ jobs:
       run: |
         [[ $RUNNER_OS == 'Linux' ]] && sudo apt-get update && sudo apt-get install ninja-build -y
         if [[ $RUNNER_OS == 'Windows' ]]; then
-          echo "C:\\mingw64\\bin" >> $GITHUB_PATH
           echo "C:\\msys64\\bin" >> $GITHUB_PATH
           echo "C:\\msys64\\usr\\bin" >> $GITHUB_PATH
         fi
