@@ -49,10 +49,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4 
-    
-    - name: Test python
-      run: python -V
-    
+     
     - name: Begin env
       shell: python
       run: |
