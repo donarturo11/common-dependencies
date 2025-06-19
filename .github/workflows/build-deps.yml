@@ -99,6 +99,7 @@ jobs:
     
     - name: test msys
       if: ${{ matrix.name == 'windows-gcc' }}
+      shell: C:\msys64\msys2.EXE {0}
       run: |
         pacman -Syu --noconfirm
 
