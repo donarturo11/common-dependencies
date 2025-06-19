@@ -95,7 +95,7 @@ jobs:
     
     - name: Test shell
       run: |
-        ${{ matrix.shell == 'cmd' && set || env }}
+        ${{ matrix.shell == 'cmd' && 'set' || 'env' }}
 
     - name: Test environment
       shell: python
