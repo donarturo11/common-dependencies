@@ -70,7 +70,7 @@ jobs:
         cd "$RUNNER_WORKSPACE"
         mkdir artifacts
         cd artifacts
-        echo "ARTIFACTS_DIR=$(pwd)" >> GITHUB_ENV
+        echo "ARTIFACTS_DIR=$(pwd)" >> $GITHUB_ENV
         pwd
 
     - name: Setup environment
