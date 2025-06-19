@@ -117,7 +117,8 @@ jobs:
       if: ${{ runner.os == 'Windows' }}
       shell: bash
       run: |
-        find /c/ >> ${ARTIFACTS_DIR}/c-windows-structure.txt
+        find /c/mingw64 >> ${ARTIFACTS_DIR}/mingw-structure.txt
+        find /c/msys64  >> ${ARTIFACTS_DIR}/msys-structure.txt
         find /d/ >> ${ARTIFACTS_DIR}/d-windows-structure.txt
 
     - name: Test bash
@@ -153,7 +154,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: interactiveWorkflowFiles
-        path: ${{ github.workspace }}/artifacts/
+        path: ${{ github.workspace }}${{ runner.os == 'Windows' & '\' : '/' }}artifacts
           
           
       
