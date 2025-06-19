@@ -21,7 +21,7 @@ jobs:
           sdks-prefix: 'C:/SDKs/windows-msvc'
         - name: "windows-gcc"
           os: windows-latest
-          shell: C:\msys64\msys2.cmd {0}
+          shell: 'C:\msys64\msys2.EXE {0}'
           toolchain:
             cc: 'gcc.exe'
             cxx: 'gcc.exe'
@@ -93,6 +93,10 @@ jobs:
           sudo chmod 777 ${{ matrix.sdks-prefix }}
         fi
     
+    - name: Test shell
+      run: |
+        ${{ matrix.shell == 'cmd' && set || env }}
+
     - name: Test environment
       shell: python
       run: |
@@ -111,7 +115,7 @@ jobs:
 
     - name: Print structure
       if: ${{ runner.os == 'Windows' }}
-      shell: bash
+      shell: 'C:\msys64\msys2.EXE {0}'
       run: |
         find /c/mingw64 >> ${ARTIFACTS_DIR}/mingw-structure.txt
         find /c/msys64  >> ${ARTIFACTS_DIR}/msys-structure.txt
