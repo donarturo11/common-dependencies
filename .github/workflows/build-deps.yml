@@ -21,7 +21,7 @@ jobs:
           sdks-prefix: 'C:/SDKs/windows-msvc'
         - name: "windows-gcc"
           os: windows-latest
-          shell: msys2
+          shell: C:\msys64\msys2.EXE
           toolchain:
             cc: 'gcc.exe'
             cxx: 'gcc.exe'
