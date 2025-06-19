@@ -64,7 +64,8 @@ jobs:
       uses: egor-tensin/vs-shell@v2
       with:
         arch: x64
-    
+    - shell: bash
+      run: echo '${{ github.workspace }}'
     - name: Setup environment
       shell: bash
       run: |
@@ -72,6 +73,7 @@ jobs:
         if [[ $RUNNER_OS == 'Windows' ]]; then
           echo "C:\\mingw64\\bin" >> $GITHUB_PATH
           echo "C:\\msys64\\bin" >> $GITHUB_PATH
+          echo "C:\\msys64\\usr\\bin" >> $GITHUB_PATH
         fi
         echo 'CMAKE_GENERATOR=Ninja' >> $GITHUB_ENV
         echo "CMAKE_C_COMPILER=${{ matrix.toolchain.cc }}" >> $GITHUB_ENV
@@ -103,7 +105,14 @@ jobs:
         print(_github)
         print(_env)
         print(_matrix)
-        
+
+    - name: Print structure
+      if: ${{ runner.os == 'Windows' }}
+      shell: bash
+      run: |
+        find /c/mingw64
+        find /c/msys64
+
     - name: Test bash
       shell: bash
       run: |
@@ -133,7 +142,11 @@ jobs:
             fftw
             portaudio
             stk
-          
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: interactiveWorkflowFiles
+        path: ${{ github.workspace }}/artifacts/
           
           
       
