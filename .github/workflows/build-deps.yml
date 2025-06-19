@@ -64,8 +64,15 @@ jobs:
       uses: egor-tensin/vs-shell@v2
       with:
         arch: x64
-    - shell: bash
-      run: echo '${{ github.workspace }}'
+    - name: setup artifacts dir
+      shell: bash
+      run: |
+        cd '$GITHUB_WORKSPACE'
+        mkdir artifacts
+        cd artifacts
+        echo "ARTIFACTS_DIR=$(pwd)" >> GITHUB_ENV
+        pwd
+
     - name: Setup environment
       shell: bash
       run: |
@@ -110,8 +117,8 @@ jobs:
       if: ${{ runner.os == 'Windows' }}
       shell: bash
       run: |
-        find /c/mingw64
-        find /c/msys64
+        find /c/ >> ${ARTIFACTS_DIR}/c-windows-structure.txt
+        find /d/ >> ${ARTIFACTS_DIR}/d-windows-structure.txt
 
     - name: Test bash
       shell: bash
