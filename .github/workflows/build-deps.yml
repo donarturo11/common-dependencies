@@ -116,6 +116,7 @@ jobs:
           gcc
           cl
           pacman
+          rev
           "
         for _pkg in $packages; do
           which $_pkg  || echo $_pkg failed
