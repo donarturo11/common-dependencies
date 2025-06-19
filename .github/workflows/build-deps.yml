@@ -154,7 +154,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: interactiveWorkflowFiles
-        path: ${{ github.workspace }}${{ runner.os == 'Windows' && '\' || '/' }}artifacts
+        path: ${{ runner.workspace }}${{ runner.os == 'Windows' && '\' || '/' }}artifacts
           
           
       
