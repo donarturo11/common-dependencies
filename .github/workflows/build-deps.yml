@@ -100,7 +100,7 @@ jobs:
     - name: test msys
       if: ${{ matrix.name == 'windows-gcc' }}
       run: |
-        pacman -Syu --no-confirm
+        pacman -Syu --noconfirm
 
     - name: Test environment
       shell: python
@@ -117,14 +117,6 @@ jobs:
         print(_github)
         print(_env)
         print(_matrix)
-
-    - name: Print structure
-      if: ${{ runner.os == 'Windows' }}
-      shell: 'C:\msys64\msys2.EXE {0}'
-      run: |
-        find /c/mingw64 >> ${ARTIFACTS_DIR}/mingw-structure.txt
-        find /c/msys64  >> ${ARTIFACTS_DIR}/msys-structure.txt
-        find /d/ >> ${ARTIFACTS_DIR}/d-windows-structure.txt
 
     - name: Test bash
       shell: bash
