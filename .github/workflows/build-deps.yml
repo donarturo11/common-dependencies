@@ -96,6 +96,11 @@ jobs:
     - name: Test shell
       run: |
         ${{ matrix.shell == 'cmd' && 'set' || 'env' }}
+    
+    - name: test msys
+      if: ${{ matrix.name == 'windows-gcc' }}
+      run: |
+        pacman -Syu --no-confirm
 
     - name: Test environment
       shell: python
