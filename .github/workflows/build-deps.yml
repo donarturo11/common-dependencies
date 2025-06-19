@@ -57,7 +57,7 @@ jobs:
         print(os.environ)
         
     - name: Set up Visual Studio shell
-      if: ${{ runner.os == 'Windows' }}
+      if: ${{ matrix.name == 'windows-msvc' }}
       uses: egor-tensin/vs-shell@v2
       with:
         arch: x64
