@@ -123,8 +123,6 @@ jobs:
 
     - name: Test bash
       shell: bash
-      env:
-        TEST_CMD: {0}
       run: |
         echo {0}
         packages="
