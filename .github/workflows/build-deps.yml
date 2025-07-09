@@ -33,14 +33,21 @@ jobs:
             cc: 'gcc'
             cxx: 'gcc'
           sdks-prefix: '/opt/SDKs/linux-gcc'
-        - name: "macos-clang"
+        - name: "macos-clang arm64"
           os: macos-latest
           shell: bash
           toolchain:
             cc: 'clang'
             cxx: 'clang++'
           sdks-prefix: '/opt/SDKs/macos-clang'
-    
+        - name: "macos-clang amd64"
+          os: macos-13
+          shell: bash
+          toolchain:
+            cc: 'clang'
+            cxx: 'clang++'
+          sdks-prefix: '/opt/SDKs/macos-clang'
+   
     runs-on: ${{matrix.os}}
     defaults:
       run:
