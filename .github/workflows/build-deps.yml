@@ -57,11 +57,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4 
      
-    - name: Begin env
-      shell: python
+    - name: Test env
+      shell: bash
       run: |
-        import os
-        print(os.environ)
+        echo "::group::Runner parameters"
+        env | grep "^RUNNER"
+        echo "::endgroup::"
+        echo "::group::all env"
+        env
+        echo "::endgroup::"
         
     - name: Set up Visual Studio shell
       if: ${{ matrix.name == 'windows-msvc' }}
