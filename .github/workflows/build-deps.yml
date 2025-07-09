@@ -56,7 +56,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4 
-     
+    - name: UNAME
+      shell: bash
+      run: |
+        echo "uname -o: $(uname -o)"
+        echo "uname -s: $(uname -s)"
+        echo "uname -m: $(uname -m)"
     - name: Test env
       shell: bash
       run: |
