@@ -172,7 +172,15 @@ jobs:
             fftw
             portaudio
             stk
-
+    - name: Test environment action
+      uses: ./.github/actions/test-env
+      env:
+          CC: ${{ matrix.toolchain.cc }}
+          CXX: ${{ matrix.toolchain.cxx }}
+      with:
+        tag: ${{ matrix.name }}
+        packages: >-
+            fftw
     - uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }}-commonDepsArtifacts
