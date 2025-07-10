@@ -69,7 +69,7 @@ jobs:
         env | grep "^RUNNER"
         echo "::endgroup::"
         echo "::group::all env"
-        env
+        env | sort
         echo "::endgroup::"
         
     - name: Set up Visual Studio shell

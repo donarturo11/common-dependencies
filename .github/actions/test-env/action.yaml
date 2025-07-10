@@ -11,4 +11,4 @@ runs:
   - name: test env
     shell: bash
     run: |
-        env
+        env | sort
