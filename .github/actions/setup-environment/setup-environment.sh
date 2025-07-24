@@ -1,4 +1,4 @@
-#!/usr/bin/env
+#!/usr/bin/env bash
 CWD=$(cd $(dirname $0); pwd}
 [[ $RUNNER_OS == 'Linux' ]] && sudo apt-get update && sudo apt-get install ninja-build -y
 [[ $RUNNER_OS == 'Windows' ]] && echo "C:\\mingw64\\bin" >> $GITHUB_PATH
