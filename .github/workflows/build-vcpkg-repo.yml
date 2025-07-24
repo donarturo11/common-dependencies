@@ -1,4 +1,4 @@
-name: Build common deps
+name: Build VCPKG repo
 
 on:
   workflow_dispatch
