@@ -1,0 +1,11 @@
+name: Set up environment
+runs:
+  using: composite
+  steps:
+  - name: Setup MSVC (Windows only)
+    if: runner.os == 'Windows'
+    uses: ilammy/msvc-dev-cmd@v1
+    with:
+      arch: x64
+  - run: ${GITHUB_ACTION_PATH}/setup-environment.sh
+    shell: bash
