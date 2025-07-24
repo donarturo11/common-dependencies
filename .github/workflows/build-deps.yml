@@ -42,9 +42,9 @@ jobs:
     defaults:
       run:
         shell: bash
-        env:
-          RUNNER_PROFILE: ${{ runner.workspace }}/.runner-profile.rc
-          MATRIX_NAME: ${{ matrix.name }}
+    env:
+      RUNNER_PROFILE: ${{ runner.workspace }}/.runner-profile.rc
+      MATRIX_NAME: ${{ matrix.name }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4 
@@ -56,14 +56,15 @@ jobs:
         echo "uname -m: $(uname -m)"
     - name: Set up environment
       uses: ./.github/actions/setup-environment
-    - uses: actions/upload-artifact@v4
+    - name: Upload artifact
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }}-commonDepsArtifacts
-        path: ${{ runner.workspace }}${{ runner.os == 'Windows' && '\' || '/' }}artifacts
-          
-          
-      
-          
-
-
-
+        path: ${{ runner.workspace }}\artifacts
+    - name: Upload artifact (non-Windows)
+      if: runner.os != 'Windows'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.name }}-commonDepsArtifacts
+        path: ${{ runner.workspace }}/artifacts
