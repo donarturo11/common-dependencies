@@ -14,45 +14,37 @@ jobs:
        include:
         - name: "windows-msvc"
           os: windows-latest
-          shell: cmd
           toolchain:
             cc: 'cl'
             cxx: 'cl'
-          sdks-prefix: 'C:/SDKs/windows-msvc'
-        - name: "windows-gcc"
+        - name: "windows-mingw"
           os: windows-latest
-          shell: bash
           toolchain:
             cc: 'gcc.exe'
             cxx: 'gcc.exe'
-          sdks-prefix: 'C:/SDKs/windows-mingw'
-        - name: "linux-gcc"
+        - name: "linux"
           os: ubuntu-latest
-          shell: bash
           toolchain:
             cc: 'gcc'
             cxx: 'gcc'
-          sdks-prefix: '/opt/SDKs/linux-gcc'
-        - name: "macos-clang arm64"
+        - name: "macos_arm64"
           os: macos-latest
-          shell: bash
           toolchain:
             cc: 'clang'
             cxx: 'clang++'
-          sdks-prefix: '/opt/SDKs/macos-clang'
-        - name: "macos-clang amd64"
+        - name: "macos_amd64"
           os: macos-13
-          shell: bash
           toolchain:
             cc: 'clang'
             cxx: 'clang++'
-          sdks-prefix: '/opt/SDKs/macos-clang'
    
     runs-on: ${{matrix.os}}
     defaults:
       run:
-        shell: ${{ matrix.shell }}
-    
+        shell: bash
+      env:
+        RUNNER_PROFILE: ${{ runner.workspace }}/.runner-profile.rc
+        MATRIX_NAME: ${{ matrix.name }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4 
@@ -62,125 +54,8 @@ jobs:
         echo "uname -o: $(uname -o)"
         echo "uname -s: $(uname -s)"
         echo "uname -m: $(uname -m)"
-    - name: Test env
-      shell: bash
-      run: |
-        echo "::group::Runner parameters"
-        env | grep "^RUNNER"
-        echo "::endgroup::"
-        echo "::group::all env"
-        env | sort
-        echo "::endgroup::"
-        
-    - name: Set up Visual Studio shell
-      if: ${{ matrix.name == 'windows-msvc' }}
-      uses: egor-tensin/vs-shell@v2
-      with:
-        arch: x64
-
-    - name: Test bash
-      shell: bash
-      run: |
-        echo \$0=$0
-        echo \$1=$1
-
-    - name: setup artifacts dir
-      shell: bash
-      run: |
-        cd "$RUNNER_WORKSPACE"
-        mkdir artifacts
-        cd artifacts
-        echo "ARTIFACTS_DIR=$(pwd)" >> $GITHUB_ENV
-        pwd
-
-    - name: Setup environment
-      shell: bash
-      run: |
-        [[ $RUNNER_OS == 'Linux' ]] && sudo apt-get update && sudo apt-get install ninja-build -y
-        if [[ $RUNNER_OS == 'Windows' ]]; then
-          echo "C:\\msys64\\bin" >> $GITHUB_PATH
-          echo "C:\\msys64\\usr\\bin" >> $GITHUB_PATH
-        fi
-        echo 'CMAKE_GENERATOR=Ninja' >> $GITHUB_ENV
-        echo "CMAKE_C_COMPILER=${{ matrix.toolchain.cc }}" >> $GITHUB_ENV
-        echo "CC=${{ matrix.toolchain.cc }}" >> $GITHUB_ENV
-        echo "CMAKE_CXX_COMPILER=${{ matrix.toolchain.cxx }}" >> $GITHUB_ENV
-        echo "CXX=${{ matrix.toolchain.cxx }}" >> $GITHUB_ENV
-        echo 'SDKS_PREFIX=${{ matrix.sdks-prefix }}' >> $GITHUB_ENV
-        if [[ $RUNNER_OS == 'macOS' ]]; then
-         echo 'CMAKE_OSX_ARCHITECTURES=x86_64;arm64' >> $GITHUB_ENV
-         echo 'CMAKE_OSX_DEPLOYMENT_TARGET=11' >> $GITHUB_ENV
-        fi
-        if [[ $RUNNER_OS != 'Windows' ]]; then
-          sudo mkdir -p ${{ matrix.sdks-prefix }}
-          sudo chmod 777 ${{ matrix.sdks-prefix }}
-        fi
-    
-    - name: Test shell
-      run: |
-        ${{ matrix.shell == 'cmd' && 'set' || 'env' }}
-    
-    - name: test msys
-      if: ${{ matrix.name == 'windows-gcc' }}
-      shell: C:\msys64\msys2.EXE {0}
-      run: |
-        pacman -Syu --noconfirm
-
-    - name: Test environment
-      shell: python
-      run: |
-        _github="""
-            .github ${{ toJSON(github) }}
-            """
-        _env="""
-            env ${{ toJSON(env) }}
-            """
-        _matrix="""
-            matrix ${{ toJSON(matrix) }}
-            """
-        print(_github)
-        print(_env)
-        print(_matrix)
-
-    - name: Test bash
-      shell: bash
-      run: |
-        echo {0}
-        packages="
-          7z
-          bsdtar
-          cmake
-          ninja
-          make
-          gcc
-          cl
-          pacman
-          rev
-          "
-        for _pkg in $packages; do
-          which $_pkg  || echo $_pkg failed
-        done
-
-    - name: Test package builder
-      uses: ./.github/actions/build-package
-      env:
-          CC: ${{ matrix.toolchain.cc }}
-          CXX: ${{ matrix.toolchain.cxx }}
-      with:
-        tag: ${{ matrix.name }}
-        packages: >-
-            fftw
-            portaudio
-            stk
-    - name: Test environment action
-      uses: ./.github/actions/test-env
-      env:
-          CC: ${{ matrix.toolchain.cc }}
-          CXX: ${{ matrix.toolchain.cxx }}
-      with:
-        tag: ${{ matrix.name }}
-        packages: >-
-            fftw
+    - name: Set up environment
+      uses: ./.github/actions/setup-environment
     - uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }}-commonDepsArtifacts
