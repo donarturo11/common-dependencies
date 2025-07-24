@@ -1,0 +1,45 @@
+name: Build common deps
+
+on:
+  workflow_dispatch
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    strategy:
+      matrix:
+       include:
+        - name: "windows-msvc"
+          vcpkg-triplet: "x64-windows"
+          os: windows-latest
+
+    runs-on: ${{matrix.os}}
+    defaults:
+      run:
+        shell: bash
+      env:
+        VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg-triplet }}
+        VCPKGRC: ${{ runner.workspace }}
+        OWNCLOUD_TOKEN: ${{ secrets.OWNCLOUD_TOKEN }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Setup environment
+      uses: ./.github/actions/setup-environment
+    - name: Setup vcpkg binary registry
+      run: |
+        curl -qL -H Authorization: Basic $OWNCLOUD_TOKEN \
+          https://freeshell.de/owncloud/remote.php/webdav/CI/vcpkg-binhost.sh > $VCPKGRC
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+          limit-access-to-actor: true
+          #install-dependencies: false
+      timeout-minutes: 60
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.name }}-vcpkgArtifacts
+        path: ${{ runner.workspace }}${{ runner.os == 'Windows' && '\' || '/' }}artifacts
