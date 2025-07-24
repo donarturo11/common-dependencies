@@ -51,7 +51,7 @@ jobs:
         echo "uname -o: $(uname -o)"
         echo "uname -s: $(uname -s)"
         echo "uname -m: $(uname -m)"
-    - name  Setup common vars
+    - name: Setup common vars
       env:
         RUNNER_PROFILE: ${{ runner.workspace }}/.runner-profile.rc
         MATRIX_NAME: ${{ matrix.name }}
