@@ -42,9 +42,9 @@ jobs:
     defaults:
       run:
         shell: bash
-      env:
-        RUNNER_PROFILE: ${{ runner.workspace }}/.runner-profile.rc
-        MATRIX_NAME: ${{ matrix.name }}
+        env:
+          RUNNER_PROFILE: ${{ runner.workspace }}/.runner-profile.rc
+          MATRIX_NAME: ${{ matrix.name }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4 
