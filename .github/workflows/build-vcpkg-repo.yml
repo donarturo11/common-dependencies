@@ -46,7 +46,7 @@ jobs:
     - name: Setup vcpkg binary registry
       run: |
         CWD=$(cd $RUNNER_WORKSPACE; pwd)
-        curl -qL -H Authorization: Basic $OWNCLOUD_TOKEN \
+        curl -qL -H "Authorization: Basic $OWNCLOUD_TOKEN" \
           https://freeshell.de/owncloud/remote.php/webdav/CI/vcpkgrc > $CWD/.vcpkgrc
         source $CWD/.vcpkgrc
         echo VCPKG_BINARY_SOURCES=$VCPKG_BINARY_SOURCES >> $GITHUB_ENV
