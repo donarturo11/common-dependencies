@@ -57,8 +57,9 @@ jobs:
         MATRIX_NAME: ${{ matrix.name }}
         OWNCLOUD_TOKEN: ${{ secrets.OWNCLOUD_TOKEN }}
       run: |
-        RUNNER_PROFILE=$RUNNER_PROFILE >> $GITHUB_ENV
-        MATRIX_NAME=$MATRIX_NAME >> $GITHUB_ENV
+        echo RUNNER_PROFILE=$RUNNER_PROFILE >> $GITHUB_ENV
+        echo MATRIX_NAME=$MATRIX_NAME >> $GITHUB_ENV
+        echo OWNCLOUD_TOKEN=$OWNCLOUD_TOKEN >> $GITHUB_ENV
     - name: Set up environment
       uses: ./.github/actions/setup-environment
     - name: Test own artifacts
