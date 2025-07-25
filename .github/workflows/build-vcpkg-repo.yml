@@ -20,19 +20,27 @@ jobs:
     defaults:
       run:
         shell: bash
-      env:
-        VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg-triplet }}
-        VCPKGRC: ${{ runner.workspace }}
-        OWNCLOUD_TOKEN: ${{ secrets.OWNCLOUD_TOKEN }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - name: Get runner variables
+      env:
+        VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg-triplet }}
+        OWNCLOUD_TOKEN: ${{ secrets.OWNCLOUD_TOKEN }}
+      run: |
+        RUNNER_WORKSPACE=${RUNNER_WORKSPACE//\\//} >> GITHUB_ENV
+        echo VCPKG_DEFAULT_TRIPLET=$VCPKG_DEFAULT_TRIPLET >> $GITHUB_ENV
+        echo OWNCLOUD_TOKEN >> $GITHUB_ENV
+
     - name: Setup environment
       uses: ./.github/actions/setup-environment
     - name: Setup vcpkg binary registry
       run: |
+        CWD=$(cd $RUNNER_WORKSPACE; pwd)
         curl -qL -H Authorization: Basic $OWNCLOUD_TOKEN \
-          https://freeshell.de/owncloud/remote.php/webdav/CI/vcpkg-binhost.sh > $VCPKGRC
+          https://freeshell.de/owncloud/remote.php/webdav/CI/vcpkgrc > $CWD/.vcpkgrc
+        source $CWD/.vcpkgrc
+        echo VCPKG_BINARY_SOURCES=$VCPKG_BINARY_SOURCES >> $GITHUB_ENV
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
       with:
