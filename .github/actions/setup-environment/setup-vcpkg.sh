@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-cd $RUNNER_WORKSPACE
-VCPKG_ROOT=$RUNNER_WORKSPACE/vcpkg
+CWD=${RUNNER_WORKSPACE//\\//}
+cd $CWD
+VCPKG_ROOT=$CWD/vcpkg
 git clone https://github.com/microsoft/vcpkg $VCPKG_ROOT
 echo VCPKG_ROOT=${VCPKG_ROOT} >> $GITHUB_ENV
 echo VCPKG_MAX_CONCURRENCY=20 >> $GITHUB_ENV

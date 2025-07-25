@@ -5,7 +5,7 @@ CWD=$(cd $(dirname $0); pwd)
 if [[ $RUNNER_OS == 'Windows' ]]; then
   echo "C:\\mingw64\\bin" >> $GITHUB_PATH
 fi
-ARTIFACTS_DIR=$GITHUB_WORKSPACE/artifacts
+ARTIFACTS_DIR=${RUNNER_WORKSPACE//\\//}/artifacts
 mkdir -vp $ARTIFACTS_DIR
 echo ARTIFACTS_DIR=$ARTIFACTS_DIR >> $GITHUB_ENV
 bash $CWD/setup-vcpkg.sh
