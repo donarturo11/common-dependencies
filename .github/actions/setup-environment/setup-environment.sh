@@ -8,4 +8,5 @@ fi
 ARTIFACTS_DIR=$RUNNER_WORKSPACE/artifacts
 touch $ARTIFACTS_DIR
 [[ ! $RUNNER_OS == 'Windows' ]] && chmod 777 $ARTIFACTS_DIR
+echo ARTIFACTS_DIR=$ARTIFACTS_DIR >> $GITHUB_ENV
 bash $CWD/setup-vcpkg.sh
