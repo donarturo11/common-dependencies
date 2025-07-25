@@ -4,7 +4,7 @@ CWD=$(cd $(dirname $0); pwd)
 [[ $RUNNER_OS == 'Windows' ]] && echo "C:\\mingw64\\bin" >> $GITHUB_PATH
 if [[ $RUNNER_OS == 'Windows' ]]; then
   echo "C:\\mingw64\\bin" >> $GITHUB_PATH
-  RUNNER_WORKSPACE=$(cygpath -m $RUNNER_WORKSPACE) >> $GITHUB_PATH
+  RUNNER_WORKSPACE=$(cygpath -m $RUNNER_WORKSPACE) >> $GITHUB_ENV
 fi
 ARTIFACTS_DIR=$RUNNER_WORKSPACE/artifacts
 mkdir -vp $ARTIFACTS_DIR
