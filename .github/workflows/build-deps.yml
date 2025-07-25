@@ -12,31 +12,31 @@ jobs:
     strategy:
       matrix:
        include:
-#        - name: "windows-msvc"
-#          os: windows-latest
-#          toolchain:
-#            cc: 'cl'
-#            cxx: 'cl'
-#        - name: "windows-mingw"
-#          os: windows-latest
-#          toolchain:
-#            cc: 'gcc.exe'
-#            cxx: 'gcc.exe'
+        - name: "windows-msvc"
+          os: windows-latest
+          toolchain:
+            cc: 'cl'
+            cxx: 'cl'
+        - name: "windows-mingw"
+          os: windows-latest
+          toolchain:
+            cc: 'gcc.exe'
+            cxx: 'gcc.exe'
         - name: "linux"
           os: ubuntu-latest
           toolchain:
             cc: 'gcc'
             cxx: 'gcc'
-#        - name: "macos_arm64"
-#          os: macos-latest
-#          toolchain:
-#            cc: 'clang'
-#            cxx: 'clang++'
-#        - name: "macos_amd64"
-#          os: macos-13
-#          toolchain:
-#            cc: 'clang'
-#            cxx: 'clang++'
+        - name: "macos_arm64"
+          os: macos-latest
+          toolchain:
+            cc: 'clang'
+            cxx: 'clang++'
+        - name: "macos_amd64"
+          os: macos-13
+          toolchain:
+            cc: 'clang'
+            cxx: 'clang++'
    
     runs-on: ${{matrix.os}}
     defaults:
@@ -67,16 +67,11 @@ jobs:
         cd $RUNNER_WORKSPACE
         env >> $ARTIFACTS_DIR/${MATRIX_NAME}-env-test.env
         tar -vczf ${MATRIX_NAME}-artifacts.tar.gz $ARTIFACTS_DIR/
-        #curl -qL -H Authorization: Basic $OWNCLOUD_TOKEN \
-        #   -X PUT \
-        #   -T ${MATRIX_NAME}-artifacts.tar.gz \
-        #  https://freeshell.de/owncloud/remote.php/webdav/CI/${MATRIX_NAME}-artifacts.tar.gz
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      with:
-          limit-access-to-actor: true
-          #install-dependencies: false
-      timeout-minutes: 60
+        curl -qL -H Authorization: Basic $OWNCLOUD_TOKEN \
+           -X PUT \
+           -H "Authorization: $OWNCLOUD_TOKEN" \
+           -T ${MATRIX_NAME}-artifacts.tar.gz \
+          https://freeshell.de/owncloud/remote.php/webdav/CI/${MATRIX_NAME}-artifacts.tar.gz
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
