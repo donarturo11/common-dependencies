@@ -8,4 +8,3 @@ fi
 ARTIFACTS_DIR=${RUNNER_WORKSPACE//\\//}/artifacts
 mkdir -vp $ARTIFACTS_DIR
 echo ARTIFACTS_DIR=$ARTIFACTS_DIR >> $GITHUB_ENV
-bash $CWD/setup-vcpkg.sh
