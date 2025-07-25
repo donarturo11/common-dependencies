@@ -70,9 +70,8 @@ jobs:
           cd $ARTIFACTS_DIR
           tar -vczf ${RUNNER_WORKSPACE}/${MATRIX_NAME}-artifacts.tar.gz *
         )
-        curl -qL -H Authorization: Basic $OWNCLOUD_TOKEN \
+        curl -qL -H "Authorization: Basic $OWNCLOUD_TOKEN" \
            -X PUT \
-           -H "Authorization: $OWNCLOUD_TOKEN" \
            -T ${RUNNER_WORKSPACE}/${MATRIX_NAME}-artifacts.tar.gz \
           https://freeshell.de/owncloud/remote.php/webdav/CI/${MATRIX_NAME}-artifacts.tar.gz
     - name: Upload artifact
