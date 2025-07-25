@@ -65,14 +65,15 @@ jobs:
     - name: Test own artifacts
       run: |
         cd $RUNNER_WORKSPACE
+        CWD=$(pwd)
         env >> $ARTIFACTS_DIR/${MATRIX_NAME}-env-test.env
         (
           cd $ARTIFACTS_DIR
-          tar -vczf ${RUNNER_WORKSPACE}/${MATRIX_NAME}-artifacts.tar.gz *
+          tar -vczf ${CWD}/${MATRIX_NAME}-artifacts.tar.gz *
         )
         curl -qL -H "Authorization: Basic $OWNCLOUD_TOKEN" \
            -X PUT \
-           -T ${RUNNER_WORKSPACE}/${MATRIX_NAME}-artifacts.tar.gz \
+           -T ${CWD}/${MATRIX_NAME}-artifacts.tar.gz \
           https://freeshell.de/owncloud/remote.php/webdav/CI/${MATRIX_NAME}-artifacts.tar.gz
     - name: Upload artifact
       uses: actions/upload-artifact@v4
