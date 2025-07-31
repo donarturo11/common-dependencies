@@ -49,14 +49,15 @@ jobs:
         curl -qL -H "Authorization: Basic $OWNCLOUD_TOKEN" \
           https://freeshell.de/owncloud/remote.php/webdav/CI/vcpkgrc > $CWD/.vcpkgrc
         source $CWD/.vcpkgrc
-        echo VCPKG_BINARY_SOURCES=$VCPKG_BINARY_SOURCES >> $GITHUB_ENV
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      with:
-          limit-access-to-actor: true
-          #install-dependencies: false
-      timeout-minutes: 60
+        cd ${GITHUB_WORKSPACE//\\//}/vcpkg-repo
+        vcpkg install
+#    - name: Setup tmate session
+#      uses: mxschmitt/action-tmate@v3
+#      with:
+#          limit-access-to-actor: true
+#          #install-dependencies: false
+#      timeout-minutes: 60
     - uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.name }}-vcpkgArtifacts
-        path: ${{ runner.workspace }}${{ runner.os == 'Windows' && '\' || '/' }}artifacts
+        name: ${{ matrix.name }}-vcpkgRepo
+        path: ${{ github.workspace }}/vcpkg-repo
