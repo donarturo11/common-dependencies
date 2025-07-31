@@ -4,7 +4,7 @@
      "qtcharts",
      "qtmultimedia",
      "qtconnectivity",
-     "qtserialport"
+     "qtserialport",
      "qt5-connectivity",
      "qt5-serialport",
      "qt5-charts",
