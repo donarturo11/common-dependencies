@@ -1,0 +1,16 @@
+{
+  "dependencies": [
+     "qtbase",
+     "qtcharts",
+     "qtmultimedia",
+     "qtconnectivity",
+     "qtserialport"
+     "qt5-connectivity",
+     "qt5-serialport",
+     "qt5-charts",
+     "qt5-multimedia",
+     "ffmpeg"
+     "portaudio"
+     "libstk"
+     ]
+}
