@@ -9,8 +9,8 @@
      "qt5-serialport",
      "qt5-charts",
      "qt5-multimedia",
-     "ffmpeg"
-     "portaudio"
+     "ffmpeg",
+     "portaudio",
      "libstk"
      ]
 }
