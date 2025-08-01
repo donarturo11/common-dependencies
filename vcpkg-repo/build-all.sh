@@ -7,6 +7,6 @@ find $CWD -iname 'vcpkg.json' | while read -r _manifest
 do
   _cwd=$(dirname $_manifest)
   cd $_cwd
-  vcpkg install --dry-run
+  vcpkg install
   tar -vczf $ARTIFACTS_DIR/$(basename $_cwd).tar.gz *
 done
