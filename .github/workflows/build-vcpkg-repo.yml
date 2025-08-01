@@ -39,7 +39,8 @@ jobs:
         CWD=${RUNNER_WORKSPACE//\\//}
         cd $CWD
         VCPKG_ROOT=$CWD/vcpkg
-        git clone https://github.com/microsoft/vcpkg $VCPKG_ROOT
+        curl -qL https://github.com/microsoft/vcpkg/archive/refs/tags/2025.07.25.tar.gz -o vcpkg.tar.gz &> /dev/null
+        tar -xzf vcpkg.tar.gz --strip-components=1 -C $VCPKG_ROOT
         echo VCPKG_ROOT=${VCPKG_ROOT} >> $GITHUB_ENV
         echo VCPKG_MAX_CONCURRENCY=20 >> $GITHUB_ENV
         bash $VCPKG_ROOT/bootstrap-vcpkg.sh
