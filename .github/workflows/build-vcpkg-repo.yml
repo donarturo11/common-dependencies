@@ -51,10 +51,6 @@ jobs:
         source $CWD/.vcpkgrc
         export ARTIFACTS_DIR=$(cd ${RUNNER_WORKSPACE//\\//}/artifacts; pwd)
         ${GITHUB_WORKSPACE//\\//}/vcpkg-repo/build-all.sh
-    - name: Put installed directory to artifacts
-      run: |
-        cd $VCPKG_ROOT
-        tar -vczf $ARTIFACTS_DIR/${{ matrix.name }}-vcpkg-installed.tar.gz installed/
 
 #    - name: Setup tmate session
 #      uses: mxschmitt/action-tmate@v3
