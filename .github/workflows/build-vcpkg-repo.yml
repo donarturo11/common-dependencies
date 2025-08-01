@@ -39,6 +39,7 @@ jobs:
         CWD=$(cd $RUNNER_WORKSPACE; pwd)
         cd $CWD
         VCPKG_ROOT=$CWD/vcpkg
+        [ ! -e $VCPKG_ROOT ] && mkdir -p $VCPKG_ROOT
         curl -qL https://github.com/microsoft/vcpkg/archive/refs/tags/2025.07.25.tar.gz -o vcpkg.tar.gz &> /dev/null
         tar -xzf vcpkg.tar.gz --strip-components=1 -C $VCPKG_ROOT
         echo VCPKG_ROOT=${VCPKG_ROOT} >> $GITHUB_ENV
