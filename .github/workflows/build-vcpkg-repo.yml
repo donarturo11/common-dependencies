@@ -49,7 +49,7 @@ jobs:
         curl -qL -H "Authorization: Basic $OWNCLOUD_TOKEN" \
           https://freeshell.de/owncloud/remote.php/webdav/CI/vcpkgrc > $CWD/.vcpkgrc
         source $CWD/.vcpkgrc
-        export ARTIFACTS_DIR=${RUNNER_WORKSPACE//\\//}/artifacts
+        export ARTIFACTS_DIR=$(cd ${RUNNER_WORKSPACE//\\//}/artifacts; pwd)
         ${GITHUB_WORKSPACE//\\//}/vcpkg-repo/build-all.sh
     - name: Put installed directory to artifacts
       run: |
