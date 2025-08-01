@@ -1,0 +1,13 @@
+{
+  "dependencies": [
+     "qtbase",
+     "qtcharts",
+     {
+       "name": "qtmultimedia",
+       "features": [ "ffmpeg" ]
+     },
+     "ffmpeg",
+     "portaudio",
+     "libstk"
+     ]
+}

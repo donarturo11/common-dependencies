@@ -1,0 +1,9 @@
+{
+  "dependencies": [
+     "qtbase",
+     "qtcharts",
+     "qtconnectivity",
+     "qtserialport",
+     "fftw3"
+     ]
+}

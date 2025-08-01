@@ -1,0 +1,9 @@
+{
+  "dependencies": [
+     "qt5-base",
+     "qt5-connectivity",
+     "qt5-serialport",
+     "qt5-charts",
+     "fftw3"
+     ]
+}

@@ -49,8 +49,12 @@ jobs:
         curl -qL -H "Authorization: Basic $OWNCLOUD_TOKEN" \
           https://freeshell.de/owncloud/remote.php/webdav/CI/vcpkgrc > $CWD/.vcpkgrc
         source $CWD/.vcpkgrc
-        cd ${GITHUB_WORKSPACE//\\//}/vcpkg-repo
-        vcpkg install
+        ${GITHUB_WORKSPACE//\\//}/vcpkg-repo/build-all.sh
+    - name: Put installed directory to artifacts
+      run: |
+        cd $VCPKG_ROOT
+        tar -vczf $ARTIFACTS_DIR/${{ matrix.name }}-vcpkg-installed.tar.gz installed/
+
 #    - name: Setup tmate session
 #      uses: mxschmitt/action-tmate@v3
 #      with:
@@ -60,4 +64,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }}-vcpkgRepo
-        path: ${{ github.workspace }}/vcpkg-repo
+        path: ${{ runner.workspace }}/artifacts
