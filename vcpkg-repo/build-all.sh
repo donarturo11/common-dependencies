@@ -2,7 +2,6 @@
 
 CWD=$(cd $(dirname $0); pwd)
 ARTIFACTS_DIR=${ARTIFACTS_DIR:-$CWD/artifacts}
-ARTIFACTS_DIR=${ARTIFACTS_DIR//\\//}
 [ ! -e $ARTIFACTS_DIR ] && mkdir $ARTIFACTS_DIR
 find $CWD -iname 'vcpkg.json' | while read -r _manifest
 do
