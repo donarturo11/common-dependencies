@@ -4,7 +4,7 @@ CWD=$(cd $(dirname $0); pwd)
 ARTIFACTS_DIR=${ARTIFACTS_DIR:-$CWD/artifacts}
 [ ! -e $ARTIFACTS_DIR ] && mkdir -p $ARTIFACTS_DIR
 if [ $RUNNER_OS == "Windows" ]; then
-  export VCPKG_DEFAULT_BINARY_CACHE=${LOCALAPPDATA//\\//}/${APPDATA//\\//}/vcpkg/archives
+  export VCPKG_DEFAULT_BINARY_CACHE=${LOCALAPPDATA//\\//}/vcpkg/archives
 else
   export VCPKG_DEFAULT_BINARY_CACHE=$HOME/.cache/vcpkg/archives
 fi
