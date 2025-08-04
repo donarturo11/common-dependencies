@@ -3,13 +3,17 @@
 CWD=$(cd $(dirname $0); pwd)
 ARTIFACTS_DIR=${ARTIFACTS_DIR:-$CWD/artifacts}
 [ ! -e $ARTIFACTS_DIR ] && mkdir -p $ARTIFACTS_DIR
-export VCPKG_DEFAULT_BINARY_CACHE=$(cd $ARTIFACTS_DIR; pwd)
-echo "::notice::VCPKG_DEFAULT_BINARY_CACHE: $VCPKG_DEFAULT_BINARY_CACHE"
-if [ "$RUNNER_OS" == "Windows" ]
-then
-  BSDTAR="/c/windows/system32/tar.exe"
+if [ $RUNNER_OS == "Windows" ]; then
+  export VCPKG_DEFAULT_BINARY_CACHE=${LOCALAPPDATA//\\//}/${APPDATA//\\//}/vcpkg/archives
 else
-  BSDTAR="$(which bsdtar)"
+  export VCPKG_DEFAULT_BINARY_CACHE=$HOME/.cache/vcpkg/archives
+fi
+echo "::notice::VCPKG_DEFAULT_BINARY_CACHE: $VCPKG_DEFAULT_BINARY_CACHE"
+if [ $RUNNER_OS == "Windows" ]
+then
+  export BSDTAR="/c/windows/system32/tar.exe"
+else
+  export BSDTAR="$(which bsdtar)"
 fi
 
 find $CWD -iname 'vcpkg.json' | while read -r _manifest
@@ -31,3 +35,4 @@ do
   echo "Filename: $_arch" >> Packages
   echo >> Packages
 done
+cp -av $VCPKG_DEFAULT_BINARY_CACHE $ARTIFACTS_DIR
