@@ -3,7 +3,7 @@
 CWD=$(cd $(dirname $0); pwd)
 ARTIFACTS_DIR=${ARTIFACTS_DIR:-$CWD/artifacts}
 [ ! -e $ARTIFACTS_DIR ] && mkdir $ARTIFACTS_DIR
-VCPKG_DEFAULT_BINARY_CACHE=$(cd $ARTIFACTS_DIR; pwd)
+export VCPKG_DEFAULT_BINARY_CACHE=$(cd $ARTIFACTS_DIR; pwd)
 if [ "$RUNNER_OS" == "Windows" ]
 then
   BSDTAR="/c/windows/system32/tar.exe"
