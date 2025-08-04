@@ -28,7 +28,6 @@ find -iname '*.zip' | sed -e 's|./||' | while read -r _arch
 do
   echo "::notice::Adding $_arch to db"
   $BSDTAR -xOf $_arch CONTROL >> Packages
-  $BSDTAR -xOf $_arch BUILD_INFO >> Packages
   echo "Filename: $_arch" >> Packages
   echo >> Packages
 done
