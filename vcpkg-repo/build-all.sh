@@ -2,8 +2,9 @@
 
 CWD=$(cd $(dirname $0); pwd)
 ARTIFACTS_DIR=${ARTIFACTS_DIR:-$CWD/artifacts}
-[ ! -e $ARTIFACTS_DIR ] && mkdir $ARTIFACTS_DIR
+[ ! -e $ARTIFACTS_DIR ] && mkdir -p $ARTIFACTS_DIR
 export VCPKG_DEFAULT_BINARY_CACHE=$(cd $ARTIFACTS_DIR; pwd)
+echo "::notice::VCPKG_DEFAULT_BINARY_CACHE: $VCPKG_DEFAULT_BINARY_CACHE"
 if [ "$RUNNER_OS" == "Windows" ]
 then
   BSDTAR="/c/windows/system32/tar.exe"
@@ -20,14 +21,13 @@ do
   echo "::endgroup::"
 done
 
-cd $ARTIFACTS_DIR
+cd $VCPKG_DEFAULT_BINARY_CACHE
 [ -e Packages ] && rm Packages
 find -iname '*.zip' | sed -e 's|./||' | while read -r _arch
 do
-  echo "::group::Adding $_arch to db"
+  echo "::notice::Adding $_arch to db"
   $BSDTAR -xOf $_arch CONTROL >> Packages
   $BSDTAR -xOf $_arch BUILD_INFO >> Packages
   echo "Filename: $_arch" >> Packages
   echo >> Packages
-  echo "::endgroup::"
 done
