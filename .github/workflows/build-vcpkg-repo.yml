@@ -54,12 +54,12 @@ jobs:
         export ARTIFACTS_DIR=$(cd ${RUNNER_WORKSPACE//\\//}/artifacts; pwd)
         ${GITHUB_WORKSPACE//\\//}/vcpkg-repo/build-all.sh
 
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-      with:
-          limit-access-to-actor: true
-          #install-dependencies: false
-      timeout-minutes: 60
+#    - name: Setup tmate session
+#      uses: mxschmitt/action-tmate@v3
+#      with:
+#          limit-access-to-actor: true
+#          #install-dependencies: false
+#      timeout-minutes: 60
     - uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.name }}-vcpkgRepo
