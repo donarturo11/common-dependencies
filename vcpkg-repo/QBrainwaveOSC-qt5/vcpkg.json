@@ -4,6 +4,7 @@
      "qt5-connectivity",
      "qt5-serialport",
      "qt5-charts",
+     "qt5-tools",
      "fftw3"
      ]
 }
