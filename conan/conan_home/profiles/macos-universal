@@ -1,0 +1,11 @@
+[settings]
+arch=armv8|x86_64
+build_type=Release
+compiler=apple-clang
+compiler.cppstd=20
+compiler.libcxx=libc++
+compiler.version=15
+os=Macos
+
+[replace_requires]
+cmake/*: cmake/4.1.1#c811ac78910a0927e9d7da8e30d20fe7

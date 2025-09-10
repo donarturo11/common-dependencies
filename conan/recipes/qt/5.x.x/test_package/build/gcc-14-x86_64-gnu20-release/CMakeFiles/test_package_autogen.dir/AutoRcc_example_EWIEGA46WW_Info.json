@@ -1,0 +1,22 @@
+{
+	"BUILD_DIR" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package/build/gcc-14-x86_64-gnu20-release/test_package_autogen",
+	"CMAKE_BINARY_DIR" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package/build/gcc-14-x86_64-gnu20-release",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package/build/gcc-14-x86_64-gnu20-release",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package",
+	"CMAKE_SOURCE_DIR" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Ninja",
+	"INCLUDE_DIR" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package/build/gcc-14-x86_64-gnu20-release/test_package_autogen/include",
+	"INPUTS" : [ "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package/resource.txt" ],
+	"LOCK_FILE" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package/build/gcc-14-x86_64-gnu20-release/CMakeFiles/test_package_autogen.dir/AutoRcc_example_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "example" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_example.cpp",
+	"RCC_EXECUTABLE" : "C:/WORKSPACE/conan/conan_home/p/b/qta9380fc5e8fff/p/lib/cmake/Qt5Core/../../../bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package/build/gcc-14-x86_64-gnu20-release/CMakeFiles/test_package_autogen.dir/AutoRcc_example_EWIEGA46WW_Used.txt",
+	"SOURCE" : "C:/WORKSPACE/conan/overlay/qt/5.x.x/test_package/example.qrc",
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}

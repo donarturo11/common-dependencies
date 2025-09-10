@@ -1,0 +1,3 @@
+C:/WORKSPACE/conan/overlay/freetype/meson/test_package/build/gcc-12-x86_64-20-release/CMakeFiles/test_package.dir
+C:/WORKSPACE/conan/overlay/freetype/meson/test_package/build/gcc-12-x86_64-20-release/CMakeFiles/edit_cache.dir
+C:/WORKSPACE/conan/overlay/freetype/meson/test_package/build/gcc-12-x86_64-20-release/CMakeFiles/rebuild_cache.dir

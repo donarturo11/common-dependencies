@@ -1,0 +1,97 @@
+From 7805b3c32f88a5405a4a12b402c93cf6cb5dedc4 Mon Sep 17 00:00:00 2001
+From: Marc Mutz <marc.mutz@qt.io>
+Date: Mon, 5 Aug 2024 20:05:24 +0200
+Subject: [PATCH] Only define QT_SUPPORTS_INT128 if type_traits work for them
+
+It turns out that libstdc++ in -ansi mode defines __SIZEOF_INT128__,
+but not the corresponding specializations of <type_traits> and
+<limits>. This has caused numerous pain points over time, esp. since
+is_signed doesn't work, so qt_saturate e.g. can't be used on qint128
+inputs e.g.
+
+After another such issue (cmp_equal()), we decided to require
+<type_traits> and <limits> support for extended integer types in the
+stdlib, or we will disable Qt's support for it, too.
+
+So check that if QT_SUPPORTS_INT128 is defined, is_signed_v,
+is_integral_v and numeric_limits work, too. Disable QT_SUPPORTS_INT128
+when compiling with libstdc++ in __STRICT_ANSI__ mode (-ansi or
+-std=c++NN instead of (the default) -std=gnu++NN).
+
+[ChangeLog][Potentially Source-Incompatible Changes] Qt's support for
+128-bit integers (qint128/quint128) is now conditional on support for
+these types from the Standard Library, in particular <type_traits> and
+<limits>. Qt no longer tries to work around missing Standard Library
+support. As a consequence, e.g. GCC -ansi and GCC -std=c++NN (instead
+of -std=gnu++NN, the default) builds will now no longer support these
+types.
+
+Task-number: QTBUG-119901
+Change-Id: I8529e72a52a2f5da0f469bae543688e18220255f
+Reviewed-by: Ivan Solovev <ivan.solovev@qt.io>
+Reviewed-by: Thiago Macieira <thiago.macieira@intel.com>
+(cherry picked from commit 9bb2ab5978625eee96f703871d5eca8e54b31386)
+Reviewed-by: Qt Cherry-pick Bot <cherrypick_bot@qt-project.org>
+---
+ src/corelib/global/qtypes.h                       |  9 +++++++++
+ tests/auto/corelib/global/qglobal/tst_qglobal.cpp | 13 +++++++++++++
+ 2 files changed, 22 insertions(+)
+
+diff --git a/src/corelib/global/qtypes.h b/src/corelib/global/qtypes.h
+index 9cc0a9126b80..d5dffe604779 100644
+--- a/src/corelib/global/qtypes.h
++++ b/src/corelib/global/qtypes.h
+@@ -16,6 +16,7 @@
+ // P1467 implementation - https://wg21.link/p1467
+ #    include <stdfloat>
+ #  endif // defined(__STDCPP_FLOAT16_T__) && __has_include(<stdfloat>)
++#  include <type_traits>
+ #else
+ #  include <assert.h>
+ #endif
+@@ -67,6 +68,9 @@ typedef quint64 qulonglong;
+ #  define QT_SUPPORTS_INT128 16
+ #elif defined(__SIZEOF_INT128__) && !defined(QT_NO_INT128)
+ #  define QT_SUPPORTS_INT128 __SIZEOF_INT128__
++#  if defined(__GLIBCXX__) && defined(__STRICT_ANSI__) // -ansi/-std=c++NN instead of gnu++NN
++#    undef QT_SUPPORTS_INT128                          // breaks <type_traits> on libstdc++
++#  endif
+ #else
+ #  undef QT_SUPPORTS_INT128
+ #endif
+@@ -75,6 +79,11 @@ typedef quint64 qulonglong;
+ __extension__ typedef __int128_t qint128;
+ __extension__ typedef __uint128_t quint128;
+ 
++#ifdef __cplusplus
++static_assert(std::is_signed_v<qint128>,
++              "Qt requires <type_traits> and <limits> to work for q(u)int128.");
++#endif
++
+ // limits:
+ #  ifdef __cplusplus /* need to avoid c-style-casts in C++ mode */
+ #    define QT_C_STYLE_CAST(type, x) static_cast<type>(x)
+diff --git a/tests/auto/corelib/global/qglobal/tst_qglobal.cpp b/tests/auto/corelib/global/qglobal/tst_qglobal.cpp
+index e67f991faeb9..619913a41e1c 100644
+--- a/tests/auto/corelib/global/qglobal/tst_qglobal.cpp
++++ b/tests/auto/corelib/global/qglobal/tst_qglobal.cpp
+@@ -16,6 +16,19 @@
+ #include <limits>
+ #include <QtCore/qxptype_traits.h>
+ 
++// Check that <type_traits> works for q(u)int128; if any of these trigger,
++// adjust the ifdef'ery in qtypes.h to exclude builds with broken lib support.
++#ifdef QT_SUPPORTS_INT128
++static_assert(std::is_signed_v<qint128>);
++static_assert(std::is_integral_v<qint128>);
++static_assert(std::is_integral_v<quint128>);
++static_assert(std::numeric_limits<qint128>::is_signed);
++static_assert(std::numeric_limits<qint128>::is_specialized);
++static_assert(std::numeric_limits<quint128>::is_specialized);
++static_assert((std::numeric_limits<qint128>::max)() == Q_INT128_MAX);
++static_assert((std::numeric_limits<quint128>::max)() == Q_UINT128_MAX);
++#endif // QT_SUPPORTS_INT128
++
+ template <typename T>
+ using AdlSwappableTest = decltype(swap(std::declval<T&>(), std::declval<T&>()));
+ 

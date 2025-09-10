@@ -1,0 +1,48 @@
+{
+    "version": 3,
+    "vendor": {
+        "conan": {}
+    },
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 15,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "conan-gcc-12-x86_64-gnu17-release",
+            "displayName": "'conan-gcc-12-x86_64-gnu17-release' config",
+            "description": "'conan-gcc-12-x86_64-gnu17-release' configure using 'Unix Makefiles' generator",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "CMAKE_POLICY_DEFAULT_CMP0091": "NEW",
+                "CMAKE_BUILD_TYPE": "Release"
+            },
+            "environment": {
+                "CXX": "C:/mingw64/bin/g++.exe",
+                "CC": "C:/mingw64/bin/gcc.exe",
+                "INCLUDE": "$penv{INCLUDE} C:/mingw64/include",
+                "LIB": "$penv{LIB} C:/mingw64/lib",
+                "PATH": "$penv{PATH};C:/mingw64/bin"
+            },
+            "toolchainFile": "generators\\conan_toolchain.cmake",
+            "binaryDir": "E:\\WARSZTAT00\\conan\\repo\\conan-center-index\\recipes\\freetype\\meson\\test_package\\build\\gcc-12-x86_64-gnu17-release"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "conan-gcc-12-x86_64-gnu17-release",
+            "configurePreset": "conan-gcc-12-x86_64-gnu17-release",
+            "jobs": 4
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "conan-gcc-12-x86_64-gnu17-release",
+            "configurePreset": "conan-gcc-12-x86_64-gnu17-release",
+            "environment": {
+                "PATH": "C:\\Users\\art\\.conan2\\p\\b\\freet24ec7ce443a3a\\p\\bin;C:\\Users\\art\\.conan2\\p\\b\\libpn1bb9a247cf358\\p\\bin;C:\\Users\\art\\.conan2\\p\\b\\zlib12491f27206b8\\p\\bin;C:\\Users\\art\\.conan2\\p\\b\\bzip2f092b9138c8ee\\p\\bin;C:\\Users\\art\\.conan2\\p\\b\\brotl65d84d2688e55\\p\\bin;$penv{PATH}"
+            }
+        }
+    ]
+}

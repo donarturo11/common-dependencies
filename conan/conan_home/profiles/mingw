@@ -1,0 +1,25 @@
+[settings]
+os=Windows
+arch=x86_64
+build_type=Release
+compiler=gcc
+compiler.version=14
+compiler.libcxx=libstdc++11
+compiler.cppstd=gnu20
+compiler.threads=posix
+compiler.exception=seh
+
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja
+tools.build:skip_test=True
+tools.build:cflags=["-Wno-error", "-pipe"]
+tools.build:cxxflags=["-Wno-error", "-pipe"]
+
+[buildenv]
+PATH+=(path)C:/mingw64/bin
+CC=C:/mingw64/bin/gcc.exe
+CXX=C:/mingw64/bin/g++.exe
+CFLAGS+=-Wno-error -pipe
+CXXFLAGS+=-Wno-error -pipe
+AR=C:/mingw64/bin/ar.exe
+NM=C:/mingw64/bin/nm.exe
