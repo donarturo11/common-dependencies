@@ -1,0 +1,15 @@
+[options]
+qt/*:shared=True
+qt/*:qtcharts=True
+qt/*:widgets=True
+qt/*:gui=True
+qt/*:qtdeclarative=True
+qt/*:qtimageformats=True
+qt/*:qtconnectivity=True
+qt/*:qtsensors=True
+qt/*:qtserialport=True
+qt/*:qtmultimedia=True
+qt/*:qttools=True
+qt/*:with_mysql=False
+qt/*:with_pq=False
+qt/*:opengl=desktop

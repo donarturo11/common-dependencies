@@ -1,0 +1,4 @@
+[options]
+fftw/*:shared=True
+portaudio/*:shared=True
+stk/*:shared=True
