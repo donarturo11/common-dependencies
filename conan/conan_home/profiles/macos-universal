@@ -7,6 +7,9 @@ compiler.libcxx=libc++
 compiler.version=15
 os=Macos
 [options]
-libpng/*: neon=False
+libpng/*:neon=False
+*/*:with_libiconv=False
+qt/*:with_pq=False
 [replace_requires]
-cmake/*: cmake/4.1.1#c811ac78910a0927e9d7da8e30d20fe7
+#cmake/*: cmake/4.1.1#c811ac78910a0927e9d7da8e30d20fe7
+cmake/*: cmake/4.1.1@ci/stable
