@@ -9,7 +9,11 @@
    "name": "conancenter",
    "url": "https://center2.conan.io",
    "verify_ssl": true
+  },
+  {
+   "name": "freeshell",
+   "url": "https://freeshell.de/arturwro/conan-server",
+   "verify_ssl": true
   }
-
  ]
 }

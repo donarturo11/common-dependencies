@@ -35,6 +35,7 @@ jobs:
       working-directory: ${{ runner.workspace }}
       env:
         GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        FREESHELL_CONAN_TOKEN: ${{ secrets.FREESHELL_CONAN_TOKEN }}
         DEFAULT_PROFILE: ${{ matrix.name }}
         IS_MSVC: matrix.is_msvc
       run: |
